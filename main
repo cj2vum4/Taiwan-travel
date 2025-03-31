@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>興煜大平台 - 旅行的意義除了美景還有旅伴</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft JhengHei', Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        header {
+            position: relative;
+            height: 400px;
+            color: white;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 0 20px;
+            overflow: hidden;
+        }
+        
+        /* 新增的header-image樣式 */
+        .header-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
+        }
+        
+        /* 新增的header-overlay樣式 */
+        .header-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7));
+            z-index: -1;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            position: relative; /* 確保文字在圖片上層 */
+            z-index: 1;
+        }
+        
+        .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            position: relative; /* 確保文字在圖片上層 */
+            z-index: 1;
+        }
+        
+        /* 確保按鈕在圖片上層 */
+        header .btn {
+            position: relative;
+            z-index: 1;
+        }
+        
+        nav {
+            background-color: #2c8d46;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin: 0 15px;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 20px;
+        }
+        
+        section {
+            margin-bottom: 3rem;
+        }
+        
+        h2 {
+            font-size: 2rem;
+            color: #2c8d46;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #2c8d46;
+        }
+        
+        .attraction-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .attraction-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .attraction-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .attraction-img {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .attraction-content {
+            padding: 1.5rem;
+        }
+        
+        .attraction-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+        
+        .attraction-content p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: #2c8d46;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #236e38;
+        }
+        
+        .itinerary {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .itinerary h3 {
+            color: #2c8d46;
+            margin-bottom: 1rem;
+        }
+        
+        .itinerary-day {
+            margin-bottom: 2rem;
+        }
+        
+        .itinerary-day:last-child {
+            margin-bottom: 0;
+        }
+        
+        .itinerary-day h4 {
+            background-color: #f0f7f1;
+            padding: 0.5rem 1rem;
+            border-left: 4px solid #2c8d46;
+            margin-bottom: 1rem;
+        }
+        
+        .itinerary-item {
+            display: flex;
+            margin-bottom: 1rem;
+            padding-left: 1rem;
+        }
+        
+        .itinerary-time {
+            min-width: 80px;
+            font-weight: bold;
+            color: #2c8d46;
+        }
+        
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 300px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .social-links a {
+            color: white;
+            margin-right: 15px;
+            font-size: 1.5rem;
+        }
+        
+        .copyright {
+            width: 100%;
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav ul li {
+                margin: 5px 0;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+    <script>
+        // 確保所有錨點連結都能平滑滾動
+        document.addEventListener('DOMContentLoaded', function() {
+            // 處理所有點擊事件
+            document.addEventListener('click', function(e) {
+                // 檢查是否點擊了錨點連結
+                if (e.target.tagName === 'A' && e.target.getAttribute('href') && e.target.getAttribute('href').startsWith('#')) {
+                    const targetId = e.target.getAttribute('href').substring(1);
+                    const targetElement = document.getElementById(targetId);
+                    
+                    if (targetElement) {
+                        e.preventDefault();
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <img src="IMG20250323190136_02.jpg" alt="南投風景照" class="header-image">
+        <div class="header-overlay"></div>
+        <h1>興煜大平台</h1>
+        <p class="subtitle">旅行的意義除了美景，還有旅伴</p>
+        <a href="#attractions" class="btn" onclick="document.getElementById('attractions').scrollIntoView({behavior: 'smooth'});">開始探索</a>
+    </header>
+    
+    <nav>
+        <ul>
+            <li><a href="#about" onclick="document.getElementById('about').scrollIntoView({behavior: 'smooth'}); return false;">關於我們</a></li>
+            <li><a href="#attractions" onclick="document.getElementById('attractions').scrollIntoView({behavior: 'smooth'}); return false;">熱門景點</a></li>
+            <li><a href="#itinerary" onclick="document.getElementById('itinerary').scrollIntoView({behavior: 'smooth'}); return false;">行程規劃</a></li>
+            <li><a href="#transportation" onclick="document.getElementById('transportation').scrollIntoView({behavior: 'smooth'}); return false;">交通資訊</a></li>
+            <li><a href="#contact" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'}); return false;">聯絡我們</a></li>
+        </ul>
+    </nav>
+    
+    <main>
+        <section id="about">
+            <h2>關於我們</h2>
+            <p>南投縣位於台灣的中心，是台灣唯一不靠海的縣市。這裡有壯麗的山脈、清澈的湖泊和豐富的原住民文化，是台灣最美麗的自然寶庫之一。從日月潭的靜謐湖水到合歡山的雄偉山景，從埔里的純淨酒香到清境的青青草原，南投提供了多樣化的旅遊體驗。</p>
+            <p>無論您是喜歡戶外活動、文化探索還是美食品嚐，南投都能滿足您的需求。來南投，感受台灣的心跳，探索這片綠色天堂的無限魅力。</p>
+        </section>
+        
+        <section id="attractions">
+            <h2>熱門景點</h2>
+            <div class="attraction-grid">
+                <div class="attraction-card">
+                    <div class="attraction-img" style="background-image: url('/api/placeholder/400/300');"></div>
+                    <div class="attraction-content">
+                        <h3>日月潭</h3>
+                        <p>台灣最大的天然湖泊，湖光山色美不勝收，可以搭乘遊艇環湖或騎乘自行車享受湖邊風光。</p>
+                        <a href="javascript:void(0)" onclick="alert('日月潭詳細信息將在此顯示')" class="btn">了解更多</a>
+                    </div>
+                </div>
+                
+                <div class="attraction-card">
+                    <div class="attraction-img" style="background-image: url('/api/placeholder/400/300');"></div>
+                    <div class="attraction-content">
+                        <h3>清境農場</h3>
+                        <p>位於海拔1,750公尺的高山牧場，有「霧上桃源」之稱，可以觀賞綿羊秀、享受青青草原和遠眺山景。</p>
+                        <a href="javascript:void(0)" onclick="alert('清境農場詳細信息將在此顯示')" class="btn">了解更多</a>
+                    </div>
+                </div>
+                
+                <div class="attraction-card">
+                    <div class="attraction-img" style="background-image: url('/api/placeholder/400/300');"></div>
+                    <div class="attraction-content">
+                        <h3>合歡山</h3>
+                        <p>台灣著名的高山，是觀星和賞雪的絕佳地點，每年七月的合歡山杜鵑花季更是美不勝收。</p>
+                        <a href="javascript:void(0)" onclick="alert('合歡山詳細信息將在此顯示')" class="btn">了解更多</a>
+                    </div>
+                </div>
+                
+                <div class="attraction-card">
+                    <div class="attraction-img" style="background-image: url('/api/placeholder/400/300');"></div>
+                    <div class="attraction-content">
+                        <h3>溪頭自然教育園區</h3>
+                        <p>被譽為「森林浴」的發源地，擁有豐富的森林資源和涼爽的氣候，是避暑和健行的好去處。</p>
+                        <a href="javascript:void(0)" onclick="alert('溪頭自然教育園區詳細信息將在此顯示')" class="btn">了解更多</a>
+                    </div>
+                </div>
+                
+                <div class="attraction-card">
+                    <div class="attraction-img" style="background-image: url('/api/placeholder/400/300');"></div>
+                    <div class="attraction-content">
+                        <h3>埔里酒廠</h3>
+                        <p>台灣知名的酒廠，可以了解紹興酒的釀造過程，還有各種酒類產品可以品嚐和購買。</p>
+                        <a href="javascript:void(0)" onclick="alert('埔里酒廠詳細信息將在此顯示')" class="btn">了解更多</a>
+                    </div>
+                </div>
+                
+                <div class="attraction-card">
+                    <div class="attraction-img" style="background-image: url('/api/placeholder/400/300');"></div>
+                    <div class="attraction-content">
+                        <h3>九族文化村</h3>
+                        <p>主題樂園與原住民文化園區結合，有刺激的遊樂設施，也可以了解台灣原住民的文化和傳統。</p>
+                        <a href="javascript:void(0)" onclick="alert('九族文化村詳細信息將在此顯示')" class="btn">了解更多</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="itinerary">
+            <h2>行程規劃</h2>
+            <div class="itinerary">
+                <h3>三天兩夜精華遊</h3>
+                
+                <div class="itinerary-day">
+                    <h4>第一天：日月潭一日遊</h4>
+                    <div class="itinerary-item">
+                        <div class="itinerary-time">09:00</div>
+                        <div class="itinerary-description">抵達日月潭水社碼頭</div>
+                    </div>
+                    <div class="itinerary-item">
+                        <div class="itinerary-time">10:00</div>
+                        <div class="itinerary-description">搭乘遊艇環湖，欣賞湖光山色</div>
+                    </div>
+                    <div class="itinerary-item">
+                        <div class="itinerary-time">12:00</div>
+                        <div class="itinerary-description">伊達邵碼頭享用原住民風味餐</div>
+                    </div>
+                    <div class="itinerary-item">
+                        <div class="itinerary-time">14:00</div>
+                        <div class="itinerary-description">參觀文武廟，欣賞日月潭全景</div>
+                    </div>
+                    <div class="itinerary-item">
+                        <div class="itinerary-time">16:00</div>
+                        <div class="itinerary-description">騎乘自行車環湖，欣賞夕陽美景</div>
+                    </div>
+                    <div class="itinerary-item">
+                        <div class="itinerary-time">18:00</div>
+                        <div class="itinerary-description">入住日月潭周邊飯店</div>
+                    </div>
+                </div>
+                
+                <div class="itinerary-day">
+                    <h4>第二天：清境農場、合歡山</h4>
+                    <div class="itinerary-item">
+                        <div class="itinerary-time">08:00</div>
+                        <div class="itinerary-description">前往清境農場</div>
+                    </div>
+                    <div class="itinerary-item">
+                        <div class="itinerary-time">10:00</div>
+                        <div class="itinerary-description">觀賞綿羊秀表演</div>
+                    </div>
+                    <div class="itinerary-item">
+                        <div class="itinerary-time">12:00</div>
+                        <div class="itinerary-description">在青青草原野餐</div>
+                    </div>
+                    <div class="itinerary-item">
+                        <div class="itinerary-time">14:00</div>
+                        <div class="itinerary-description">前往合歡山</div>
+                    </div>
+                    <div class="itinerary-item">
+                        <div class="itinerary-time">16:00</div>
+                        <div class="itinerary-description">在合歡山觀景台欣賞山景</div>
+                    </div>
+                    <div class="itinerary-item">
+                        <div class="itinerary-time">18:00</div>
+                        <div class="itinerary-description">返回清境，入住民宿</div>
+                    </div>
+                </div>
+                
+                <div class="itinerary-day">
+                    <h4>第三天：溪頭、埔里</h4>
+                    <div class="itinerary-item">
+                        <div class="itinerary-time">09:00</div>
+                        <div class="itinerary-description">前往溪頭自然教育園區</div>
+                    </div>
+                    <div class="itinerary-item">
+                        <div class="itinerary-time">10:30</div>
+                        <div class="itinerary-description">漫步森林浴步道，享受芬多精</div>
+                    </div>
+                    <div class="itinerary-item">
+                        <div class="itinerary-time">12:30</div>
+                        <div class="itinerary-description">在溪頭享用午餐</div>
+                    </div>
+                    <div class="itinerary-item">
+                        <div class="itinerary-time">14:00</div>
+                        <div class="itinerary-description">前往埔里酒廠參觀</div>
+                    </div>
+                    <div class="itinerary-item">
+                        <div class="itinerary-time">16:00</div>
+                        <div class="itinerary-description">品嚐埔里特產和紹興酒冰淇淋</div>
+                    </div>
+                    <div class="itinerary-item">
+                        <div class="itinerary-time">17:30</div>
+                        <div class="itinerary-description">賦歸</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="transportation">
+            <h2>交通資訊</h2>
+            <p>前往南投有多種交通選擇：</p>
+            <ul style="list-style: none; margin-top: 1rem;">
+                <li style="margin-bottom: 1rem; padding-left: 1.5rem; position: relative;">
+                    <strong style="color: #2c8d46;">自行開車：</strong> 從台北經國道3號→國道6號→台14線→各景點
+                </li>
+                <li style="margin-bottom: 1rem; padding-left: 1.5rem; position: relative;">
+                    <strong style="color: #2c8d46;">大眾運輸：</strong> 搭乘台鐵至台中站，轉乘南投客運前往各景點
+                </li>
+                <li style="margin-bottom: 1rem; padding-left: 1.5rem; position: relative;">
+                    <strong style="color: #2c8d46;">客運直達：</strong> 從台北、台中、高雄等地有直達日月潭、埔里等地的客運路線
+                </li>
+                <li style="margin-bottom: 1rem; padding-left: 1.5rem; position: relative;">
+                    <strong style="color: #2c8d46;">套裝旅遊：</strong> 多家旅行社提供南投一日遊或多日遊套裝行程
+                </li>
+            </ul>
+        </section>
+        
+        <section id="contact">
+            <h2>聯絡我們</h2>
+            <p>如有任何問題或需要旅遊諮詢，請隨時與我們聯絡：</p>
+            <form style="margin-top: 1.5rem; background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                <div style="margin-bottom: 1.5rem;">
+                    <label for="name" style="display: block; margin-bottom: 0.5rem; font-weight: bold;">姓名</label>
+                    <input type="text" id="name" style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px;">
+                </div>
+                <div style="margin-bottom: 1.5rem;">
+                    <label for="email" style="display: block; margin-bottom: 0.5rem; font-weight: bold;">電子郵件</label>
+                    <input type="email" id="email" style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px;">
+                </div>
+                <div style="margin-bottom: 1.5rem;">
+                    <label for="message" style="display: block; margin-bottom: 0.5rem; font-weight: bold;">訊息</label>
+                    <textarea id="message" rows="5" style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px;"></textarea>
+                </div>
+                <button type="button" class="btn" style="cursor: pointer; border: none;" onclick="alert('您的訊息已送出！我們會盡快回覆您。')">送出</button>
+            </form>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>探索南投</h3>
+                <p>台灣最美的綠色寶庫，自然與文化完美融合的旅遊勝地。</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>快速連結</h3>
+                <ul style="list-style: none;">
+                    <li><a href="#about" style="color: white; text-decoration: none;" onclick="document.getElementById('about').scrollIntoView({behavior: 'smooth'}); return false;">關於我們</a></li>
+                    <li><a href="#attractions" style="color: white; text-decoration: none;" onclick="document.getElementById('attractions').scrollIntoView({behavior: 'smooth'}); return false;">熱門景點</a></li>
+                    <li><a href="#itinerary" style="color: white; text-decoration: none;" onclick="document.getElementById('itinerary').scrollIntoView({behavior: 'smooth'}); return false;">行程規劃</a></li>
+                    <li><a href="#transportation" style="color: white; text-decoration: none;" onclick="document.getElementById('transportation').scrollIntoView({behavior: 'smooth'}); return false;">交通資訊</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>聯絡資訊</h3>
+                <p>電子郵件：cj2vum4@gmail.com</p>
+                <p>Line ID：k42135302</p>
+		<p>電話： 0988-593917</p>
+                <div class="social-links">
+                    <a href="javascript:void(0)" onclick="alert('Facebook 頁面將在此開啟')">FB</a>
+                    <a href="javascript:void(0)" onclick="alert('Instagram 頁面將在此開啟')">IG</a>
+                    <a href="javascript:void(0)" onclick="alert('YouTube 頻道將在此開啟')">YT</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2025 探索南投 - 版權所有</p>
+        </div>
+    </footer>
+</body>
+</html>
